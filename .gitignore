@@ -1,0 +1,4 @@
+.DS_Store
+.tgz
+docker/kafka/files
+docker/ureplicator/ureplicator.tgz
