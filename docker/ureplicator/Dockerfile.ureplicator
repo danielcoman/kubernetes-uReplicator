@@ -11,4 +11,10 @@ RUN tar -zxf  ureplicator.tgz -C / && \
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+COPY config /uReplicator/config
+COPY bin /uReplicator/bin
+COPY uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin /uReplicator/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin
+RUN chmod +x /uReplicator/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin/*.sh
+
+
 ENTRYPOINT [ "/entrypoint.sh" ]
