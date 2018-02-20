@@ -7,14 +7,13 @@ COPY ureplicator.tgz /
 RUN tar -zxf  ureplicator.tgz -C / && \
     rm -f ureplicator.tgz
 
-# Run script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 COPY config /uReplicator/config
 COPY bin /uReplicator/bin
-COPY uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin /uReplicator/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin
-RUN chmod +x /uReplicator/uReplicator-Distribution/target/uReplicator-Distribution-pkg/bin/*.sh
+RUN chmod +x /uReplicator/bin/*.sh
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 
 ENTRYPOINT [ "/entrypoint.sh" ]

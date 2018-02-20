@@ -5,8 +5,8 @@ services:
     build:
       context: ./ureplicator
       dockerfile: ./Dockerfile.ureplicator
-    image: ureplicator:latest
-    # image: danielcoman/ureplicator:latest
+    # image: ureplicator:latest
+    image: danielcoman/ureplicator:latest
 
   # kafka-small-ureplicator:
   #   build:
