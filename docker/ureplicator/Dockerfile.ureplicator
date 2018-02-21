@@ -3,17 +3,21 @@ FROM openjdk:8-jre-alpine
 RUN apk --update add tar bash libstdc++ bind-tools && \
     rm -rf /tmp/* /var/cache/apk/*
 
+ADD https://github.com/kelseyhightower/confd/releases/download/v0.15.0/confd-0.15.0-linux-amd64 /usr/local/bin/confd
+
 COPY ureplicator.tgz /
 RUN tar -zxf  ureplicator.tgz -C / && \
     rm -f ureplicator.tgz
 
 
-COPY config /uReplicator/config
+# COPY config /uReplicator/config
 COPY bin /uReplicator/bin
-RUN chmod +x /uReplicator/bin/*.sh
+COPY confd /etc/confd
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh && \
+    chmod +x /usr/local/bin/confd && \
+    chmod +x /uReplicator/bin/*.sh
 
 
 ENTRYPOINT [ "/entrypoint.sh" ]

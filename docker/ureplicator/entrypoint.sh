@@ -1,5 +1,7 @@
 #!/bin/sh
 
+confd -onetime -backend env
+
 cd /uReplicator/bin/
 
 if [ ${SERVICE_TYPE} == "controller" ] ; then
