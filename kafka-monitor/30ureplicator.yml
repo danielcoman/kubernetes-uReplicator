@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta2 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: kafka-monitor
+  name: kafka-monitor
+  labels:
+    app: kafka-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-monitor
+  template:
+    metadata:
+      labels:
+        app: kafka-monitor
+    spec:
+      containers:
+      - name: kafka-monitor
+        image: danielcoman/kafka-monitor:latest
+        env:
+        - name: SERVICE_CMD
+          value: "start-controller.sh"
+        - name: SERVICE_TYPE
+          value: "controller"
+        - name: FOR_GODS_SAKE_PLEASE_REDEPLOY
+          value: "123"
