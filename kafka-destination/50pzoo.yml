@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: pzoo
+  name: pzoo-destination
   namespace: kafka-destination
 spec:
   serviceName: "pzoo"
@@ -16,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 10
       initContainers:
       - name: init-config
-        image: olsson/kafka-initutils:latest
+        image: solsson/kafka-initutils:latest
         command: ['/bin/bash', '/etc/kafka/init.sh']
         volumeMounts:
         - name: config
