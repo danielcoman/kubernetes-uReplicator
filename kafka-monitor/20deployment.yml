@@ -18,6 +18,7 @@ spec:
       containers:
       - name: kafka-monitor
         image: danielcoman/kafka-monitor:latest
+        imagePullPolicy: Always
         env:
         - name: SERVICE_CMD
           value: "start-controller.sh"

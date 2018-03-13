@@ -1,4 +1,4 @@
 .DS_Store
 .tgz
-docker/kafka/files
 docker/ureplicator/ureplicator.tgz
+docker/kafka-monitor/kafka-monitor.tgz

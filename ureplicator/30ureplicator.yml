@@ -18,7 +18,7 @@ spec:
         app: ureplicator
         component: controller
     spec:
-      terminationGracePeriodSeconds: 120
+      terminationGracePeriodSeconds: 30
       initContainers:
       - name: init-zk
         image: busybox
@@ -68,7 +68,7 @@ spec:
         app: ureplicator
         component: worker
     spec:
-      terminationGracePeriodSeconds: 120
+      terminationGracePeriodSeconds: 30
       initContainers:
       - name: init-zk
         image: busybox
