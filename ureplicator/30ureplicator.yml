@@ -94,5 +94,13 @@ spec:
           limits:
             cpu: 1000m
             memory: 1000M
+        volumeMounts:
+          - name: test-conf-volume
+            mountPath: /uReplicator/config/test.conf
+            subPath: test.conf
+      volumes:
+        - name: test-conf-volume
+          configMap:
+            name: test-conf-volume
       nodeSelector:
         worker: "true"
