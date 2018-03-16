@@ -56,7 +56,7 @@ case "`uname`" in
 			  else
 			      JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/${JAVA_VERSION}/Home
 			  fi
-           fi       
+           fi
            ;;
 esac
 

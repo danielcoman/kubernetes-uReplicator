@@ -17,7 +17,9 @@ if [ ${SERVICE_TYPE} == "controller" ] ; then
           -srcKafkaZkPath zookeeper.kafka-source.svc.cluster.local:2181 \
           -destKafkaZkPath zookeeper.kafka-destination.svc.cluster.local:2181 \
           -initWaitTimeInSeconds 10 \
-          -refreshTimeInSeconds 20
+          -refreshTimeInSeconds 20 \
+          -graphiteHost prometheus-graphite-exporter.monitoring.svc.cluster.local \
+          -graphitePort 9109
 
 elif [ ${SERVICE_TYPE} == "worker" ] ; then
 ./start-worker.sh \

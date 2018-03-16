@@ -5,9 +5,9 @@ RUN apk --update add tar bash libstdc++ bind-tools && \
 
 ADD https://github.com/kelseyhightower/confd/releases/download/v0.15.0/confd-0.15.0-linux-amd64 /usr/local/bin/confd
 
-COPY ureplicator.tgz /
-RUN tar -zxf  ureplicator.tgz -C / && \
-    rm -f ureplicator.tgz
+COPY ureplicator-55dad910b0762c0c45ffdfacc9a5d20d4ddffcc4.tgz /
+RUN tar -zxf  ureplicator-55dad910b0762c0c45ffdfacc9a5d20d4ddffcc4.tgz -C / && \
+    rm -f ureplicator-55dad910b0762c0c45ffdfacc9a5d20d4ddffcc4.tgz
 
 
 # COPY config /uReplicator/config
