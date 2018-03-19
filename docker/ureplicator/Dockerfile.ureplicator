@@ -10,8 +10,6 @@ RUN tar -zxf  ureplicator-55dad910b0762c0c45ffdfacc9a5d20d4ddffcc4.tgz -C / && \
     rm -f ureplicator-55dad910b0762c0c45ffdfacc9a5d20d4ddffcc4.tgz
 
 
-# COPY config /uReplicator/config
-COPY bin /uReplicator/bin
 COPY confd /etc/confd
 
 COPY entrypoint.sh /entrypoint.sh
