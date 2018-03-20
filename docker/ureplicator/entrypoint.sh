@@ -18,6 +18,7 @@ if [ ${SERVICE_TYPE} == "controller" ] ; then
           -destKafkaZkPath zookeeper.kafka-destination.svc.cluster.local:2181 \
           -initWaitTimeInSeconds 10 \
           -refreshTimeInSeconds 20 \
+          -env k8s.testing \
           -graphiteHost prometheus-graphite-exporter.monitoring.svc.cluster.local \
           -graphitePort 9109
 
