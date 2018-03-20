@@ -1,11 +1,16 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1beta2
 kind: StatefulSet
 metadata:
   name: kafka-destination
   namespace: kafka-destination
 spec:
+  selector:
+    matchLabels:
+      app: kafka-destination
   serviceName: "broker"
   replicas: 1
+  updateStrategy:
+    type: OnDelete
   template:
     metadata:
       labels:
@@ -15,54 +20,88 @@ spec:
       terminationGracePeriodSeconds: 30
       initContainers:
       - name: init-config
-        image: solsson/kafka-initutils:latest
+        image: solsson/kafka-initutils@sha256:c98d7fb5e9365eab391a5dcd4230fc6e72caf929c60f29ff091e3b0215124713
         env:
         - name: NODE_NAME
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         command: ['/bin/bash', '/etc/kafka/init.sh']
         volumeMounts:
         - name: config
           mountPath: /etc/kafka
       containers:
       - name: broker
-        image: solsson/kafka:0.11.0.1
+        image: solsson/kafka:1.0.1@sha256:1a4689d49d6274ac59b9b740f51b0408e1c90a9b66d16ad114ee9f7193bab111
         env:
         - name: KAFKA_LOG4J_OPTS
           value: -Dlog4j.configuration=file:/etc/kafka/log4j.properties
+        - name: JMX_PORT
+          value: "5555"
         ports:
-        - containerPort: 9092
+        - name: inside
+          containerPort: 9092
+        # - name: outside
+        #   containerPort: 9094
+        - name: jmx
+          containerPort: 5555
         command:
         - ./bin/kafka-server-start.sh
         - /etc/kafka/server.properties
-        - --override
-        -   zookeeper.connect=zookeeper:2181
-        - --override
-        -   log.retention.hours=-1
-        - --override
-        -   log.dirs=/var/lib/kafka/data/topics
         resources:
           requests:
-            cpu: 100m
-            memory: 512Mi
+            cpu: 200m
+            memory: 1000Mi
         readinessProbe:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - 'echo "" | nc -w 2 127.0.0.1 9092'
+          tcpSocket:
+            port: 9092
+          timeoutSeconds: 1
         volumeMounts:
         - name: config
           mountPath: /etc/kafka
         - name: data
           mountPath: /var/lib/kafka/data
+      - name: metrics
+        image: solsson/kafka-prometheus-jmx-exporter@sha256:a23062396cd5af1acdf76512632c20ea6be76885dfc20cd9ff40fb23846557e8
+        command:
+        - java
+        - -XX:+UnlockExperimentalVMOptions
+        - -XX:+UseCGroupMemoryLimitForHeap
+        - -XX:MaxRAMFraction=1
+        - -XshowSettings:vm
+        - -jar
+        - jmx_prometheus_httpserver.jar
+        - "5556"
+        - /etc/jmx-kafka/jmx-kafka-prometheus.yml
+        ports:
+        - containerPort: 5556
+        resources:
+          requests:
+            cpu: 0m
+            memory: 60Mi
+          limits:
+            memory: 120Mi
+        volumeMounts:
+        - name: jmx-config
+          mountPath: /etc/jmx-kafka
       nodeSelector:
         kafka-destination: "true"
       volumes:
       - name: config
         configMap:
           name: broker-config
+      volumes:
+      - name: jmx-config
+        configMap:
+          name: jmx-config
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -70,4 +109,4 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 10Gi
+          storage: 20Gi
