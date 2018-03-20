@@ -92,16 +92,15 @@ spec:
         volumeMounts:
         - name: jmx-config
           mountPath: /etc/jmx-kafka
-      nodeSelector:
-        kafka-destination: "true"
       volumes:
       - name: config
         configMap:
           name: broker-config
-      volumes:
       - name: jmx-config
         configMap:
           name: jmx-config
+      nodeSelector:
+        kafka-destination: "true"
   volumeClaimTemplates:
   - metadata:
       name: data
