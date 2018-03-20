@@ -1,4 +1,3 @@
-# the headless service is for PetSet DNS, this one is for clients
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,4 +8,4 @@ spec:
   - port: 2181
     name: client
   selector:
-    app: zookeeper-replica
+    app: zookeeper

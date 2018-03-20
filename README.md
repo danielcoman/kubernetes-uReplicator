@@ -29,3 +29,11 @@ Image Build:
 ```
 docker-compose -f docker/build.yml build
 ```
+
+
+Debug:
+```
+kubectl logs -c  broker kafka-source-0 --namespace kafka-source -f
+kubectl logs -c  metrics kafka-source-0 --namespace kafka-source -f
+kubectl exec -ti  -c  metrics   kafka-source-0   /bin/bash --namespace  kafka-source
+```
