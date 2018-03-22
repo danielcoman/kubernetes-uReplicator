@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: mirror-maker-config
+  namespace: mirror-maker
+data:
+  consumer.properties: |
+    # Group ID for Pipeline Mirror Maker (don't change)
+    group.id=mirrormaker
+    bootstrap.servers=broker.kafka-source.svc.cluster.local:9092
+    client.id=mirrormaker
+    receive.buffer.bytes=1048576
+    #max.partition.fetch.bytes=10485760
+    auto.offset.reset=earliest
+    request.timeout.ms=320000
+    session.timeout.ms=300000
+
+  producer.properties: |
+    # MetadataBroker(s)
+    bootstrap.servers=broker.kafka-destination.svc.cluster.local:9092
+    # Producer Settings unique to Mirror Maker
+    acks=1
+    client.id=mirrormaker
+    compression.type=lz4

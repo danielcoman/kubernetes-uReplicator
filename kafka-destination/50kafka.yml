@@ -58,8 +58,11 @@ spec:
         - /etc/kafka/server.properties
         resources:
           requests:
-            cpu: 500m
-            memory: 2000Mi
+            cpu: 250m
+            memory: 4000Mi
+          # limits:
+          #   cpu: 1000m
+          #   memory: 3000Mi
         readinessProbe:
           tcpSocket:
             port: 9092
@@ -85,10 +88,10 @@ spec:
         - containerPort: 5556
         resources:
           requests:
-            cpu: 100m
-            memory: 60Mi
-          # limits:
-          #   memory: 120Mi
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 200Mi
         volumeMounts:
         - name: jmx-config
           mountPath: /etc/jmx-kafka

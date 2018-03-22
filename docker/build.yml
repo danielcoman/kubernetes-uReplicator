@@ -6,3 +6,15 @@ services:
       context: ./ureplicator
       dockerfile: ./Dockerfile.ureplicator
     image: danielcoman/ureplicator:latest
+
+  kafka-monitor:
+    build:
+      context: ./kafka-monitor
+      dockerfile: ./Dockerfile
+    image: danielcoman/kafka-monitor:latest
+
+  mirror-maker:
+    build:
+      context: ./mirror-maker
+      dockerfile: ./Dockerfile
+    image: danielcoman/mirror-maker:latest

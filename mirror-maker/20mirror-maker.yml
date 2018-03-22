@@ -1,0 +1,48 @@
+apiVersion: apps/v1beta2 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: mirror-maker
+  name: mirror-maker-worker
+  labels:
+    app: mirror-maker
+    component: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mirror-maker
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: mirror-maker
+        component: worker
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mirror-maker-worker
+        imagePullPolicy: Always
+        image: danielcoman/mirror-maker:latest
+        env:
+        - name: FOR_GODS_SAKE_PLEASE_REDEPLOY
+          value: "123"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1000Mi
+          limits:
+            cpu: 1000m
+            memory: 2000Mi
+        volumeMounts:
+          - name: mirror-maker-config-volume
+            mountPath: /mirror-maker/config/consumer.properties
+            subPath: consumer.properties
+          - name: mirror-maker-config-volume
+            mountPath: /mirror-maker/config/producer.properties
+            subPath: producer.properties
+      volumes:
+        - name: mirror-maker-config-volume
+          configMap:
+            name: mirror-maker-config
+      nodeSelector:
+        worker: "true"

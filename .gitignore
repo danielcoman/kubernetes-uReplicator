@@ -1,4 +1,5 @@
 .DS_Store
-.tgz
+*.tgz
 docker/ureplicator/ureplicator-55dad910b0762c0c45ffdfacc9a5d20d4ddffcc4.tgz
 docker/kafka-monitor/kafka-monitor.tgz
+docker/kafka-monitor/kafka-monitor-132a5321caa764652809f3aec9b6a31bb9d4ca6d.tgz
