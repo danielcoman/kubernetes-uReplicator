@@ -31,8 +31,8 @@ spec:
           value: "init"
       containers:
       - name: ureplicator-controller
-        imagePullPolicy: Always
         image: danielcoman/ureplicator:latest
+        imagePullPolicy: Always
         env:
         - name: SERVICE_CMD
           value: "start-controller.sh"
