@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: graphite-mapping
+  namespace: ureplicator
+data:
+  graphite-mapping.conf: |
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.AutoTopicWhitelistManager.*.count
+    name="urp_AutoTopic_count"
+    controller="$1"
+    pod="$1"
+    num_type="$2"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.KafkaBrokerTopicObserver.*.kafkaTopicsCounter.count
+    name="urp_TopicsCounter"
+    controller="$1"
+    pod="$1""
+    cluster="$2"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.KafkaBrokerTopicObserver.*.refreshLatency.*
+    name="urp_refreshLatency"
+    controller="$1"
+    pod="$1"
+    cluster="$2"
+    metric="$3"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.KafkaBrokerTopicObserver.destKafkaCluster.refreshLatency.p95
+    name="urp_scale"
+    controller="$1"
+    pod="$1"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.*.topicPartitions.*.totalNumber.count
+    name="urp_worker_topicPartitions"
+    controller="$1"
+    pod="$1"
+    state="$2"
+    worker="$3"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.leader.counter.count
+    name="urp_leader_count"
+    controller="$1"
+    pod="$1"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.topic.*.count
+    name="urp_topic"
+    controller="$1"
+    pod="$1"
+    count_type="$2"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.topic.partitions.*.count
+    name="urp_topic_partitions"
+    controller="$1"
+    pod="$1"
+    count_type="$2"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.worker.liveInstances.count
+    name="urp_worker_count"
+    controller="$1"
+    pod="$1"
+    namespace="ureplicator"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.worker.rebalance.rate.*
+    name="urp_worker_rebalance_rate"
+    controller="$1"
+    pod="$1"
+    metric="$2"
+
+    stats.k8s.counter.kafka-mirror-maker-controller.testing.*.worker.rebalance.timer.*
+    name="urp_worker_rebalance_timer"
+    controller="$1"
+    pod="$1"
+    metric="$2"
+    namespace="ureplicator"

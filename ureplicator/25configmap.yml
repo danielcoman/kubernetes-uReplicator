@@ -1,9 +1,9 @@
 apiVersion: v1
-data:
-  test.conf: |
-    test
 kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: test-conf-volume
   namespace: ureplicator
+data:
+  test.conf: |
+    test

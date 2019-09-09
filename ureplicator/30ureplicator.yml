@@ -92,8 +92,8 @@ spec:
             cpu: 100m
             memory: 1000Mi
           limits:
-            cpu: 1000m
-            memory: 2000Mi
+            cpu: 1500m
+            memory: 3500Mi
         volumeMounts:
           - name: test-conf-volume
             mountPath: /uReplicator/config/test.conf
